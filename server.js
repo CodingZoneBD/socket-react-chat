@@ -5,6 +5,11 @@ const server = http.createServer(app);
 
 const { Server } = require('socket.io');
 const io = new Server(server);
+const path = require('path');
+const { Client } = require('socket.io/dist/client');
+
+
+app.use(express.static('client/build'));
 
 
 io.on('connection', function (socket) {
@@ -15,13 +20,12 @@ io.on('connection', function (socket) {
     })
 })
 
-
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+app.get('*', function (req, res) {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 });
 
-app.get('/room', function (req, res) {
-    res.sendFile(__dirname + '/room.html');
+app.get('/express-server', function (req, res) {
+    res.end("This Express server")
 });
 
 
