@@ -6,7 +6,6 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 const path = require('path');
-const { Client } = require('socket.io/dist/client');
 
 
 app.use(express.static('client/build'));
@@ -14,6 +13,10 @@ app.use(express.static('client/build'));
 
 io.on('connection', function (socket) {
     console.log("New User Connected");
+
+    setTimeout(function () {
+        socket.emit('msg', 'This msg send  on server')
+    }, 1000)
 
     socket.on('disconnect', function (socket) {
         console.log("User Disconnected");

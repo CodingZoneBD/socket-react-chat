@@ -3,13 +3,27 @@ import io from 'socket.io-client'
 
 class App extends Component {
 
-  componentDidMount() {
-    const socket = io.connect('/')
+  constructor() {
+    super();
+    this.state = {}
   }
 
-  return() {
-    <div>123
-    </div>
-  };
+  componentDidMount() {
+    const socket = io.connect('/')
+    socket.on('msg', (data) => {
+      // this.setState({ msg: data })
+      console.log(data)
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>msg: {this.state}</h1>
+      </div>
+    )
+
+  }
 }
+
 export default App;
